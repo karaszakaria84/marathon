@@ -1,1784 +1,1044 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>أسئلة الماراثون</title>
-
-<style>
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:"Cairo",Tahoma,Arial,sans-serif;
-}
-
-body{
-    min-height:100vh;
-    background:
-        radial-gradient(circle at top right,rgba(212,175,55,.10),transparent 30%),        
-        radial-gradient(circle at bottom left,rgba(255,255,255,.04),transparent 30%),
-        linear-gradient(135deg,#050505,#111111,#050505);
-
-    color:white;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    padding:20px;
-}
-
-.app{
-    width:min(1100px,100%);
-    min-height:700px;
-
-    background:rgba(18,18,18,.96);
-
-    border:1px solid rgba(212,175,55,.25);
-
-    border-radius:30px;
-
-    box-shadow:
-        0 0 40px rgba(0,0,0,.8),
-        0 0 80px rgba(212,175,55,.06);
-
-    overflow:hidden;
-}
-
-
-/* =========================
-        HEADER
-========================= */
-
-.header{
-    padding:28px 30px 22px;
-
-    border-bottom:1px solid rgba(255,255,255,.08);
-}
-
-.title{
-    text-align:center;
-
-    color:#d4af37;
-
-    font-size:clamp(25px,4vw,40px);
-
-    font-weight:900;
-
-    margin-bottom:20px;
-
-    text-shadow:
-        0 0 20px rgba(212,175,55,.18);
-}
-
-
-/* =========================
-        الأكواد
-========================= */
-
-.top-codes{
-
-    display:grid;
-
-    grid-template-columns:1fr;
-
-    gap:12px;
-
-    margin-bottom:22px;
-}
-
-.top-code{
-
-    width:100%;
-
-    padding:18px 22px;
-
-    border-radius:16px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(212,175,55,.10),
-            rgba(255,255,255,.025)
-        );
-
-    border:1px solid rgba(212,175,55,.25);
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:space-between;
-
-    gap:15px;
-}
-
-.top-code span{
-
-    color:#d4af37;
-
-    font-weight:900;
-
-    font-size:18px;
-}
-
-.top-code strong{
-
-    color:white;
-
-    font-size:21px;
-
-    direction:ltr;
-
-    letter-spacing:1px;
-}
-
-
-/* =========================
-        PROGRESS
-========================= */
-
-.progress-container{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:15px;
-}
-
-.progress-bar{
-
-    flex:1;
-
-    height:12px;
-
-    background:#272727;
-
-    border-radius:999px;
-
-    overflow:hidden;
-}
-
-.progress-fill{
-
-    height:100%;
-
-    width:0%;
-
-    background:
-        linear-gradient(
-            90deg,
-            #8d6e1f,
-            #d4af37,
-            #f5d76e
-        );
-
-    transition:width .35s ease;
-}
-
-
-/* =========================
-        CONTENT
-========================= */
-
-.content{
-
-    min-height:550px;
-
-    padding:38px;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-}
-
-
-/* =========================
-        QUESTION
-========================= */
-
-.question-box{
-
-    width:100%;
-
-    max-width:950px;
-
-    animation:questionIn .35s ease;
-}
-
-@keyframes questionIn{
-
-    from{
-
-        opacity:0;
-
-        transform:
-            translateY(18px)
-            scale(.98);
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:
-            translateY(0)
-            scale(1);
-    }
-}
-
-.question{
-
-    text-align:center;
-
-    font-size:clamp(23px,3vw,35px);
-
-    line-height:1.8;
-
-    font-weight:900;
-
-    margin-bottom:35px;
-}
-
-
-/* =========================
-        OPTIONS
-========================= */
-
-.options{
-
-    display:grid;
-
-    grid-template-columns:1fr 1fr;
-
-    gap:18px;
-}
-
-.option{
-
-    min-height:90px;
-
-    display:flex;
-
-    align-items:center;
-
-    gap:15px;
-
-    padding:17px 20px;
-
-    border-radius:20px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.055),
-            rgba(255,255,255,.02)
-        );
-
-    border:1px solid rgba(255,255,255,.08);
-
-    transition:.25s ease;
-}
-
-.option:hover{
-
-    transform:translateY(-4px);
-
-    border-color:
-        rgba(212,175,55,.45);
-
-    box-shadow:
-        0 10px 30px rgba(0,0,0,.35),
-        0 0 20px rgba(212,175,55,.07);
-}
-
-.number{
-
-    width:52px;
-
-    height:52px;
-
-    min-width:52px;
-
-    border-radius:15px;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    background:
-        linear-gradient(
-            145deg,
-            #d4af37,
-            #9e7c20
-        );
-
-    color:#111;
-
-    font-size:23px;
-
-    font-weight:900;
-}
-
-.option-text{
-
-    font-size:clamp(17px,2vw,22px);
-
-    line-height:1.7;
-
-    font-weight:700;
-}
-
-
-/* =========================
-        NEXT BUTTON
-========================= */
-
-.navigation{
-
-    margin-top:30px;
-
-    text-align:center;
-}
-
-.next-button{
-
-    border:none;
-
-    padding:13px 30px;
-
-    border-radius:16px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #d4af37,
-            #9e7c20
-        );
-
-    color:#111;
-
-    font-size:18px;
-
-    font-weight:900;
-
-    cursor:pointer;
-
-    box-shadow:
-        0 8px 24px rgba(212,175,55,.18);
-
-    transition:.25s ease;
-}
-
-.next-button:hover{
-
-    transform:translateY(-3px);
-}
-
-
-/* =========================
-        START SCREEN
-========================= */
-
-.start-screen{
-
-    width:100%;
-
-    max-width:950px;
-
-    text-align:center;
-
-    animation:questionIn .4s ease;
-}
-
-.start-button{
-
-    width:100%;
-
-    border:none;
-
-    padding:18px 30px;
-
-    border-radius:18px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #d4af37,
-            #9e7c20
-        );
-
-    color:#111;
-
-    font-size:23px;
-
-    font-weight:900;
-
-    cursor:pointer;
-
-    box-shadow:
-        0 10px 30px rgba(212,175,55,.20);
-
-    transition:.25s ease;
-}
-
-.start-button:hover{
-
-    transform:
-        translateY(-4px)
-        scale(1.01);
-
-    box-shadow:
-        0 15px 35px rgba(212,175,55,.30);
-}
-
-
-/* =========================
-        HASH SCREEN
-========================= */
-
-.special-screen{
-
-    width:100%;
-
-    text-align:center;
-
-    animation:questionIn .4s ease;
-}
-
-.hash-symbol{
-
-    font-size:120px;
-
-    color:#d4af37;
-
-    margin-bottom:20px;
-
-    text-shadow:
-        0 0 35px rgba(212,175,55,.18);
-}
-
-.special-title{
-
-    color:#d4af37;
-
-    font-size:clamp(32px,5vw,52px);
-
-    font-weight:900;
-
-    margin-bottom:20px;
-}
-
-.special-text{
-
-    color:#ddd;
-
-    font-size:clamp(20px,3vw,28px);
-
-    line-height:1.8;
-
-    margin-bottom:30px;
-}
-
-.hash-button{
-
-    width:150px;
-
-    height:150px;
-
-    border:none;
-
-    border-radius:35px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #d4af37,
-            #9e7c20
-        );
-
-    color:#111;
-
-    font-size:72px;
-
-    font-weight:900;
-
-    cursor:pointer;
-
-    transition:.25s ease;
-}
-
-.hash-button:hover{
-
-    transform:scale(1.06);
-}
-
-
-/* =========================
-        FINISH
-========================= */
-
-.finish-screen{
-
-    width:100%;
-
-    text-align:center;
-
-    animation:questionIn .4s ease;
-}
-
-.finish-symbol{
-
-    font-size:100px;
-
-    color:#d4af37;
-
-    margin-bottom:20px;
-}
-
-.finish-title{
-
-    color:#d4af37;
-
-    font-size:clamp(32px,5vw,52px);
-
-    font-weight:900;
-
-    margin-bottom:20px;
-}
-
-.finish-text{
-
-    color:#ddd;
-
-    font-size:clamp(20px,3vw,28px);
-
-    line-height:1.8;
-}
-
-
-/* =========================
-        FOOTER
-========================= */
-
-.footer{
-
-    text-align:center;
-
-    color:#777;
-
-    padding:
-        0
-        20px
-        25px;
-
-    font-size:14px;
-}
-
-
-/* =========================
-        RESPONSIVE
-========================= */
-
-@media(max-width:800px){
-
-    .options{
-
-        grid-template-columns:1fr;
-    }
-
-    .content{
-
-        padding:25px 18px;
-    }
-}
-
-@media(max-width:600px){
-
-    .header{
-
-        padding:
-            22px
-            15px
-            18px;
-    }
-
-    .top-code{
-
-        padding:
-            15px
-            16px;
-    }
-
-    .top-code span{
-
-        font-size:16px;
-    }
-
-    .top-code strong{
-
-        font-size:18px;
-    }
-}
-
-@media(max-width:520px){
-
-    body{
-
-        padding:10px;
-    }
-
-    .content{
-
-        padding:
-            20px
-            13px;
-    }
-
-    .question{
-
-        font-size:23px;
-    }
-
-    .option-text{
-
-        font-size:16px;
-    }
-
-    .number{
-
-        width:44px;
-
-        height:44px;
-
-        min-width:44px;
-
-        font-size:19px;
-    }
-
-    .start-button{
-
-        font-size:20px;
-
-        padding:
-            16px
-            20px;
-    }
-}
-
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اسئلة الماراثون</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Cairo", Tahoma, Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at top right, rgba(212, 175, 55, .10), transparent 30%),
+                radial-gradient(circle at bottom left, rgba(255, 255, 255, .04), transparent 30%),
+                linear-gradient(135deg, #050505, #111111, #050505);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .app {
+            width: min(1100px, 100%);
+            min-height: 700px;
+            background: rgba(18, 18, 18, .96);
+            border: 1px solid rgba(212, 175, 55, .25);
+            border-radius: 30px;
+            box-shadow: 0 0 40px rgba(0, 0, 0, .8), 0 0 80px rgba(212, 175, 55, .06);
+            overflow: hidden;
+        }
+
+        /* ========================= HEADER ========================== */
+        .header {
+            padding: 28px 30px 22px;
+            border-bottom: 1px solid rgba(255, 255, 255, .08);
+        }
+
+        .title {
+            text-align: center;
+            color: #d4af37;
+            font-size: clamp(25px, 4vw, 40px);
+            font-weight: 900;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(212, 175, 55, .18);
+        }
+
+        /* ========================= الأكواد ========================== */
+        .top-codes {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-bottom: 22px;
+        }
+
+        .top-code {
+            width: 100%;
+            padding: 18px 22px;
+            border-radius: 16px;
+            background: linear-gradient(145deg, rgba(212, 175, 55, .10), rgba(255, 255, 255, .025));
+            border: 1px solid rgba(212, 175, 55, .25);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .top-code span {
+            color: #d4af37;
+            font-weight: 900;
+            font-size: 18px;
+        }
+
+        .top-code strong {
+            color: white;
+            font-size: 21px;
+            direction: ltr;
+            letter-spacing: 1px;
+        }
+
+        /* ========================= PROGRESS ========================== */
+        .progress-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .progress-bar {
+            flex: 1;
+            height: 12px;
+            background: #272727;
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #8d6e1f, #d4af37, #f5d76e);
+            transition: width .35s ease;
+        }
+
+        /* ========================= CONTENT ========================== */
+        .content {
+            min-height: 550px;
+            padding: 38px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* ========================= QUESTION ========================== */
+        .question-box {
+            width: 100%;
+            max-width: 950px;
+            animation: questionIn .35s ease;
+        }
+
+        @keyframes questionIn {
+            from {
+                opacity: 0;
+                transform: translateY(18px) scale(.98);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .question {
+            text-align: center;
+            font-size: clamp(23px, 3vw, 35px);
+            line-height: 1.8;
+            font-weight: 900;
+            margin-bottom: 35px;
+        }
+
+        /* ========================= OPTIONS ========================== */
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .option {
+            min-height: 90px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 17px 20px;
+            border-radius: 20px;
+            background: linear-gradient(145deg, rgba(255, 255, 255, .055), rgba(255, 255, 255, .02));
+            border: 1px solid rgba(255, 255, 255, .08);
+            transition: .25s ease;
+            cursor: pointer;
+        }
+
+        .option:hover {
+            transform: translateY(-4px);
+            border-color: rgba(212, 175, 55, .45);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .35), 0 0 20px rgba(212, 175, 55, .07);
+        }
+
+        .number {
+            width: 52px;
+            height: 52px;
+            min-width: 52px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(145deg, #d4af37, #9e7c20);
+            color: #111;
+            font-size: 23px;
+            font-weight: 900;
+        }
+
+        .option-text {
+            font-size: clamp(17px, 2vw, 22px);
+            line-height: 1.7;
+            font-weight: 700;
+        }
+
+        /* ========================= NAVIGATION BUTTONS ========================== */
+        .navigation {
+            margin-top: 30px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .nav-button {
+            border: none;
+            padding: 13px 30px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #d4af37, #9e7c20);
+            color: #111;
+            font-size: 18px;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 8px 24px rgba(212, 175, 55, .18);
+            transition: .25s ease;
+            min-width: 140px;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-3px);
+        }
+
+        .nav-button:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .nav-button.prev {
+            background: linear-gradient(135deg, #666, #444);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, .3);
+        }
+
+        .nav-button.prev:hover:not(:disabled) {
+            background: linear-gradient(135deg, #888, #555);
+        }
+
+        /* ========================= START SCREEN ========================== */
+        .start-screen {
+            width: 100%;
+            max-width: 950px;
+            text-align: center;
+            animation: questionIn .4s ease;
+        }
+
+        .start-button {
+            width: 100%;
+            border: none;
+            padding: 18px 30px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, #d4af37, #9e7c20);
+            color: #111;
+            font-size: 23px;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(212, 175, 55, .20);
+            transition: .25s ease;
+        }
+
+        .start-button:hover {
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: 0 15px 35px rgba(212, 175, 55, .30);
+        }
+
+        /* ========================= HASH SCREEN ========================== */
+        .special-screen {
+            width: 100%;
+            text-align: center;
+            animation: questionIn .4s ease;
+        }
+
+        .hash-symbol {
+            font-size: 120px;
+            color: #d4af37;
+            margin-bottom: 20px;
+            text-shadow: 0 0 35px rgba(212, 175, 55, .18);
+        }
+
+        .special-title {
+            color: #d4af37;
+            font-size: clamp(32px, 5vw, 52px);
+            font-weight: 900;
+            margin-bottom: 20px;
+        }
+
+        .special-text {
+            color: #ddd;
+            font-size: clamp(20px, 3vw, 28px);
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .hash-button {
+            width: 150px;
+            height: 150px;
+            border: none;
+            border-radius: 35px;
+            background: linear-gradient(145deg, #d4af37, #9e7c20);
+            color: #111;
+            font-size: 72px;
+            font-weight: 900;
+            cursor: pointer;
+            transition: .25s ease;
+        }
+
+        .hash-button:hover {
+            transform: scale(1.06);
+        }
+
+        /* ========================= FINISH ========================== */
+        .finish-screen {
+            width: 100%;
+            text-align: center;
+            animation: questionIn .4s ease;
+        }
+
+        .finish-symbol {
+            font-size: 100px;
+            color: #d4af37;
+            margin-bottom: 20px;
+        }
+
+        .finish-title {
+            color: #d4af37;
+            font-size: clamp(32px, 5vw, 52px);
+            font-weight: 900;
+            margin-bottom: 20px;
+        }
+
+        .finish-text {
+            color: #ddd;
+            font-size: clamp(20px, 3vw, 28px);
+            line-height: 1.8;
+        }
+
+        /* ========================= FOOTER ========================== */
+        .footer {
+            text-align: center;
+            color: #777;
+            padding: 0 20px 25px;
+            font-size: 14px;
+        }
+
+        /* ========================= RESPONSIVE ========================== */
+        @media(max-width:800px) {
+            .options {
+                grid-template-columns: 1fr;
+            }
+            .content {
+                padding: 25px 18px;
+            }
+        }
+
+        @media(max-width:600px) {
+            .header {
+                padding: 22px 15px 18px;
+            }
+            .top-code {
+                padding: 15px 16px;
+            }
+            .top-code span {
+                font-size: 16px;
+            }
+            .top-code strong {
+                font-size: 18px;
+            }
+            .navigation {
+                flex-direction: column;
+                align-items: center;
+            }
+            .nav-button {
+                width: 100%;
+                max-width: 280px;
+            }
+        }
+
+        @media(max-width:520px) {
+            body {
+                padding: 10px;
+            }
+            .content {
+                padding: 20px 13px;
+            }
+            .question {
+                font-size: 23px;
+            }
+            .option-text {
+                font-size: 16px;
+            }
+            .number {
+                width: 44px;
+                height: 44px;
+                min-width: 44px;
+                font-size: 19px;
+            }
+            .start-button {
+                font-size: 20px;
+                padding: 16px 20px;
+            }
+        }
+    </style>
 </head>
 
-
 <body>
-
-
-<div class="app">
-
-
-    <!-- =========================
-            HEADER
-    ========================== -->
-
-    <div class="header">
-
-        <div class="title">
-           اسئلة الماراثون
-        </div>
-
-
-        <!-- الأكواد -->
-
-        <div class="top-codes">
-
-            <div class="top-code">
-
-                <span>
-                    كود الوحدات
-                </span>
-
-                <strong>
-                    #102*1*
-                </strong>
-
-            </div>
-
-
-            <div class="top-code">
-
-                <span>
-                    كود الميجابايتس
-                </span>
-
-                <strong>
-                    #102*2*
-                </strong>
-
-            </div>
-
-        </div>
-
-
-        <!-- Progress -->
-
-        <div
-            class="progress-container"
-            id="progressContainer"
-            style="display:none;"
-        >
-
-            <div class="progress-bar">
-
-                <div
-                    class="progress-fill"
-                    id="progressFill"
-                ></div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-
-    <!-- =========================
-            CONTENT
-    ========================== -->
-
-    <div
-        class="content"
-        id="content"
-    ></div>
-
-
-
-    <div class="footer">
-
-        امتحان المارثون الإعدادي
-
-    </div>
-
-
-</div>
-
-
-
-<script>
-
-
-/* =====================================================
-                    QUESTIONS
-===================================================== */
-
-const questions = [
-
-{
-    q:"في أي عام وُلد القديس أثناسيوس الرسولي؟",
-    options:[
-        "325م",
-        "313م",
-        "373م",
-        "295م"
-    ]
-},
-
-{
-    q:"ما هما الكتابان الدفاعيان اللذان كتبهما القديس أثناسيوس في شبابه المبكر حوالي عام 324م؟",
-    options:[
-        "حياة القديس أنطونيوس وعلى البتولية",
-        "الرسائل عن الروح القدس والدفاع عن هروبه",
-        "ضد الوثانيين وتجسد الكلمة",
-        "المقالات ضد الأريوسيين وطومس الأنطاكيين"
-    ]
-},
-
-{
-    q:"بأي صفة شارك القديس أثناسيوس في أعمال المجمع المسكوني الأول في نيقية عام 325م؟",
-    options:[
-        "أسقف الإسكندرية الشرعي",
-        "مبعوثًا من الإمبراطور قسطنطين",
-        "سكرتيرًا للبابا الكسندروس",
-        "ممثلًا عن رهبان البرية"
-    ]
-},
-
-{
-    q:"ما هو التحالف الذي ظهر بعد فترة قصيرة من تولي أثناسيوس رئاسة أساقفة الإسكندرية لمقاومته؟",
-    options:[
-        "تحالف بين الوثنيين واليهود فقط",
-        "تحالف بين الميليتيين والأريوسيين",
-        "تحالف بين الرهبان والأساقفة المنشقين",
-        "تحالف بين الرومان واليونان الوثنيين"
-    ]
-},
-
-{
-    q:"إلى أي مدينة نُفي القديس أثناسيوس في المرة الأولى بأمر من الإمبراطور قسطنطين عام 335م؟",
-    options:[
-        "نيقوميديا العاصمة",
-        "روما الإيطالية",
-        "ترير في بلاد الغال",
-        "أنطونوبوليس في الصعيد"
-    ]
-},
-
-{
-    q:"ما هو المبدأ اللاهوتي الذي دافع عنه القديس أثناسيوس بقوة في مجمع نيقية ضد أريوس؟",
-    options:[
-        "أن الآب والابن والروح القدس أقنوم واحد بأسماء مختلفة",
-        "أن الابن مساوٍ للآب في الجوهر",
-        "أن الروح القدس كائن مخلوق خارجي عن الثالوث",
-        "أن الابن مشابه للآب في الجوهر"
-    ]
-},
-
-{
-    q:"ما هي الوثيقة التاريخية الهامة التي كتبها القديس أثناسيوس باليونانية وتعتبر أهم مصدر عن الرهبنة المبكرة؟",
-    options:[
-        "طومس الأنطاكيين",
-        "التاريخ المبتور",
-        "سيرة القديس أنطونيوس",
-        "تاريخ بطاركة الإسكندرية"
-    ]
-},
-
-{
-    q:"كيف أوضح القديس أثناسيوس طبيعة انبثاق الروح القدس وعلاقته بالثالوث القدوس؟",
-    options:[
-        "الروح القدس طاقة مؤقتة تنتهي بانتهاء العصر الرسولي",
-        "الروح القدس هو أعلى المخلوقات العقلية وأولها رتبة",
-        "الروح القدس هو مجرد اسم آخر للابن في زمن الكنيسة",
-        "الروح القدس من نفس جوهر الآب والابن"
-    ]
-},
-
-{
-    q:"ماذا كان موقف القديس أثناسيوس بخصوص الأسرار وبالأخص سر الإفخارستيا (الخبز والخمر)؟",
-    options:[
-        "لا تتحول العناصر إلا إذا تناولها الإنسان بمفرده في البرية",
-        "هما مجرد رمزان تذكاريان رمزيان لجسد المسيح ودمه",
-        "الخبز والخمر يظلان مادتين طبيعيتين دون أي تغيير روحي",
-        "بالصلوات وعمل الروح يتحول الخبز والخمر إلى جسد ودم رب المجد يسوع"
-    ]
-},
-
-{
-    q:"كم عدد السنوات الإجمالية التي قضاها القديس أثناسيوس في المنفى خلال فترة رئاسته لكرسي الإسكندرية التي دامت 48 عامًا؟",
-    options:[
-        "5 سنوات فقط",
-        "48 عامًا كاملة",
-        "33 عامًا",
-        "16 عامًا"
-    ]
-},
-
-{
-    q:"يشمل القطمارس نبوات عن المسيح في العهد القديم مرتبطة بالعهد ...",
-    options:[
-        "الجديد",
-        "القديم",
-        "كل ما سبق"
-    ]
-},
-
-{
-    q:"أعلنت القراءات جوة القطمارس ليوم السبت والأحد أن المسيح هو ...",
-    options:[
-        "الملك",
-        "النبي",
-        "اللاويين",
-        "الكاهن"
-    ]
-},
-
-{
-    q:"أعلنت القراءات جوة القطمارس ليوم الاثنين والثلاثاء أن المسيح هو ...",
-    options:[
-        "الملك",
-        "النبي",
-        "الله",
-        "الكاهن"
-    ]
-},
-
-{
-    q:"أعلنت القراءات جوة القطمارس ليوم الخميس والجمعة أن المسيح هو ...",
-    options:[
-        "الملك",
-        "النبي",
-        "الله",
-        "الكاهن"
-    ]
-},
-
-{
-    q:"يُقرأ جوة القطمارس أسبوع الآلام عدد نبوات ...",
-    options:[
-        "130",
-        "131",
-        "132",
-        "133"
-    ]
-},
-
-{
-    q:"يُقرأ عدد ....... مزمور بإجمالي 65 مرة جوة القطمارس",
-    options:[
-        "40",
-        "41",
-        "42",
-        "43"
-    ]
-},
-
-{
-    q:"قراءات البصخة المسائية تحتوي على عدد نبوات الشماس يقرأها ...",
-    options:[
-        "1",
-        "2",
-        "3",
-        "4"
-    ]
-},
-
-{
-    q:"اسم يوم الأحد هو ...",
-    options:[
-        "الفرح والانتصار",
-        "الفرح والقوة",
-        "الفرح والإعلان",
-        "الفرح والمعرفة"
-    ]
-},
-
-{
-    q:"قراءات يوم أحد الشعانين أعلنت تفاصيل المملكة الروحية جوة طقس ...",
-    options:[
-        "رفع بخور باكر",
-        "رفع بخور عشية",
-        "قراءات القداس",
-        "صلوات الجناز"
-    ]
-},
-
-{
-    q:"عرفنا طريقة الاحتفال قديمًا من مذكرات سائحة اسمها إيجيريا سنة كام؟",
-    options:[
-        "330",
-        "388",
-        "400",
-        "402"
-    ]
-},
-
-{
-    q:"مين اللي أشار للأسقف باسيليدس على أهمية صوم الـ6 أيام في القرن الثالث؟",
-    options:[
-        "البابا ديونسيوس",
-        "البابا ديسقوروس",
-        "البابا ساويرس",
-        "الأنبا بطرس"
-    ]
-},
-
-{
-    q:"في القرن الـ... بدأوا ينظموا ساعات الصلوات البصخة لتكون 10 ساعات",
-    options:[
-        "12",
-        "11",
-        "10",
-        "5"
-    ]
-},
-
-{
-    q:"في القرن الـ13 مين اللي قام بعمل كتاب القطمارس الصلوات البصخة؟",
-    options:[
-        "الأنبا ساويرس",
-        "البابا غبريال الثاني ورهبان دير أبو مقار",
-        "البابا ديونسيوس",
-        "الأنبا بطرس"
-    ]
-},
-
-{
-    q:"قطعة أمانة اللص هي نص يوناني قديم كتب قبل القرن رقم ...",
-    options:[
-        "19",
-        "18",
-        "13",
-        "16"
-    ]
-},
-
-{
-    q:"القرن الرابع سنة ... البابا أثناسيوس دمج بين أسبوع الفصحى + الـ40 المقدسة سنة ...",
-    options:[
-        "350",
-        "340",
-        "330",
-        "320"
-    ]
-},
-
-{
-    q:"قطعة أمانة اللص هي فاصل بين صلوات الساعة ..... والساعة ..... في يوم الجمعة المحيية",
-    options:[
-        "باكر والثالثة",
-        "السادسة والتاسعة",
-        "الثالثة والسادسة",
-        "التاسعة والحادية عشر"
-    ]
-},
-
-{
-    q:"زمان في القرن الأول والثاني كانوا بيصوموا يومين بس وهما ...",
-    options:[
-        "الأحد والاثنين",
-        "السبت والأحد",
-        "الجمعة والسبت",
-        "الأحد والثلاثاء"
-    ]
-},
-
-{
-    q:"أول كنيسة احتفلت بالأسبوع المقدس الكنيسة ...",
-    options:[
-        "القبطية",
-        "الرومانية",
-        "كنيسة أورشليم",
-        "كنيسة روما"
-    ]
-},
-
-{
-    q:"الذي أضاف العظة والأسفار القانونية ونظم كتاب البصخة ثانيًا هو الأنبا ...",
-    options:[
-        "ساويرس",
-        "بطرس",
-        "أثناسيوس",
-        "ديونسيوس"
-    ]
-},
-
-{
-    q:"من ضمن أسماء أسبوع الآلام ...",
-    options:[
-        "أسبوع الواحد",
-        "أسبوع البصخة",
-        "أسبوع الاستعداد",
-        "الأسبوع المهم"
-    ]
-},
-
-{
-    q:"يبدأ أسبوع الآلام يوم ...",
-    options:[
-        "سبت النور",
-        "سبت لعازر",
-        "أحد الشعانين",
-        "اثنين البصخة"
-    ]
-},
-
-{
-    q:"شكل الكنيسة خلال هذا الأسبوع بالحزن ويُمنع فيه ...",
-    options:[
-        "البخور والقبلة المقدسة",
-        "الخورس",
-        "الكتاب المقدس",
-        "الألحان"
-    ]
-},
-
-{
-    q:"يكون الشمامسة خلال أسبوع الآلام مكانهم ...",
-    options:[
-        "الخورس الأول",
-        "صحن الكنيسة",
-        "الباب القبلي",
-        "الباب البحري"
-    ]
-},
-
-{
-    q:"عناصر البصخة جواها ...",
-    options:[
-        "الخوالجي",
-        "الطرح",
-        "القداس",
-        "السنكسار"
-    ]
-},
-
-{
-    q:"يضاف لحن في البصخة الصباحية وهو مقدمة العظة هو لحن ...",
-    options:[
-        "كي إيبرتو",
-        "أوكاتي",
-        "فاي إيطاف إنف",
-        "افتشينون"
-    ]
-},
-
-{
-    q:"عدد ساعات صلوات البصخة ...",
-    options:[
-        "7",
-        "9",
-        "10",
-        "11"
-    ]
-},
-
-{
-    q:"المزمور له 3 نغمات منهم نغمة ...",
-    options:[
-        "النغمة الفرايحي",
-        "النغمة اليوناني",
-        "النغمة الأدريبي",
-        "النغمة الشعانيني"
-    ]
-},
-
-{
-    q:"يسمح بعمل الميطانيات في البصخة ...",
-    options:[
-        "صح",
-        "خطأ"
-    ]
-},
-
-{
-    q:"من مسميات خميس العهد مسمى ...",
-    options:[
-        "الصباحية",
-        "المسائية",
-        "كل ما سبق"
-    ]
-},
-
-{
-    q:"أخذ المسيح جسدًا قابلًا للموت ولكنه غير مائت لأنه هو الحياة",
-    options:[
-        "صح",
-        "خطأ"
-    ]
-},
-
-{
-    q:"يقال لحن أمونوجينيس في الساعة الثالثة من يوم الجمعة العظيمة",
-    options:[
-        "صح",
-        "خطأ"
-    ]
-},
-
-{
-    q:"الفداء هو عملية اقتناء واستعادة للإنسان من الخطية",
-    options:[
-        "صح",
-        "خطأ"
-    ]
-},
-
-{
-    q:"أكدوا الآباء الإسكندريون أن آلام المسيح كانت شفاء وارتقاء واستعادة للإنسان",
-    options:[
-        "صح",
-        "خطأ"
-    ]
-},
-
-{
-    q:"تغيير الطبيعة والظلمة والزلزلة عند صليب المسيح كان إعلانًا أن المصلوب هو الله",
-    options:[
-        "صح",
-        "خطأ"
-    ]
-},
-
-{
-    q:"آلام المسيح كانت مبادلة خلاصية وليست بديلة",
-    options:[
-        "عقابية",
-        "سياسية",
-        "قانونية"
-    ]
-},
-
-{
-    q:"نصلي ونذكر مفهوم الخلاص في القداس",
-    options:[
-        "الكيرلس",
-        "الغريغوري",
-        "الباسيلي"
-    ]
-},
-
-{
-    q:"يقال لحن أمونوجينيس يوم الجمعة العظيمة في الساعة ...",
-    options:[
-        "الثالثة",
-        "السادسة",
-        "التاسعة"
-    ]
-},
-
-{
-    q:"لم يكن موت المسيح يسبقه مرض أو ضعف حتى لا يظن أنه موت ...",
-    options:[
-        "طبيعي",
-        "اختياري",
-        "إلهي"
-    ]
-},
-
-{
-    q:"التأكيد على بتولية العذراء .................... المسيح",
-    options:[
-        "لاهوت",
-        "تأنس",
-        "موت"
-    ]
-},
-
-{
-    q:"الرمز الذي استخدمه العهد القديم ليشير إلى شعب الله في مثل الكرامين الأردياء هو ...",
-    options:[
-        "التين",
-        "الكرم",
-        "الزيتون",
-        "الخروف"
-    ]
-},
-
-{
-    q:"أول ذبيحة طلب الله تقديمها بنفسه من إنسان في الكتاب المقدس كانت ...",
-    options:[
-        "ذبيحة هابيل من أبكار غنمه",
-        "ذبيحة نوح بعد الطوفان",
-        "ذبيحة إبراهيم لابنه إسحق (محرقة)",
-        "خروف الفصح في مصر"
-    ]
-},
-
-{
-    q:"الذبيحة الوحيدة التي كان يأكل منها مقدمها مع الكاهن وتعبر عن الشركة هي ...",
-    options:[
-        "ذبيحة المحرقة",
-        "ذبيحة الخطية",
-        "ذبيحة الإثم",
-        "ذبيحة السلامة"
-    ]
-},
-
-{
-    q:"تتميز ذبيحة الإثم عن باقي الذبائح بوجود قانون خاص يسمى قانون ...",
-    options:[
-        "الحرق الكامل خارج المحلة",
-        "الرد والتعويض (إرجاع الأصل + 20%)",
-        "نضح الدم 7 مرات أمام الحجاب",
-        "تقديم دقيق مخمور"
-    ]
-},
-
-{
-    q:"خروف الفصح كان يُحفظ بعد اختياره في اليوم العاشر لمدة كم يوم للفحص والتأكد من خلوه من العيوب؟",
-    options:[
-        "يومين",
-        "3 أيام",
-        "4 أيام",
-        "7 أيام"
-    ]
-},
-
-{
-    q:"الرتبة الكهنوتية التي لها ملء الكهنوت ولها سلطان رسم الكهنة والشمامسة هي ...",
-    options:[
-        "القسوسية",
-        "الأسقفية",
-        "الشموسية",
-        "الكهنوت العائلي"
-    ]
-},
-
-{
-    q:"رمز الدقيق الناعم (السميذ) في تقدمة الدقيق إلى ...",
-    options:[
-        "صلوات المسيح المفروضة",
-        "عهد عدم الفساد",
-        "نقاوة ناسوت السيد المسيح وكماله",
-        "مسحة الروح القدس"
-    ]
-},
-
-{
-    q:"كان يُحرق جثمان ذبيحة الخطية (للكاهن أو الجماعة) في هذا المكان دلالة على حمل النجاسة وطرد الخطية",
-    options:[
-        "على مذبح البخور",
-        "خارج المحلة",
-        "عند باب خيمة الاجتماع",
-        "داخل قدس الأقداس"
-    ]
-},
-
-{
-    q:"الأساس الذي قامت عليه رؤية المسيح المسبقة لآلامه يشتمل على النبوات، والواقع اليومي، بالإضافة إلى ...",
-    options:[
-        "الحكمة البشرية",
-        "إعلانات الأنبياء المعاصرين",
-        "معرفته الإلهية بكون الابن الوحيد العالم بكل شيء",
-        "التقاليد الشفهية"
-    ]
-},
-
-{
-    q:"المادة الممنوعة مطلقًا من الدخول في أي تقدمة من تقدمات الدقيق هي ...",
-    options:[
-        "الزيت والملح",
-        "اللبان والملح",
-        "الخمير والعسل",
-        "السميذ والتوابل"
-    ]
-},
-
-/* السؤال رقم 60 */
-{
-    q:"السؤال رقم 60",
-    options:[
-        "الإجابة الأولى",
-        "الإجابة الثانية",
-        "الإجابة الثالثة",
-        "الإجابة الرابعة"
-    ]
-}
-
-];
-
-
-/* =====================================================
-                    VARIABLES
-===================================================== */
-
-let currentQuestion = 0;
-
-let hashScreen = false;
-
-let hashAfter = 0;
-
-
-/* =====================================================
-                    ELEMENTS
-===================================================== */
-
-const content =
-    document.getElementById("content");
-
-const progressFill =
-    document.getElementById("progressFill");
-
-const progressContainer =
-    document.getElementById("progressContainer");
-
-
-/* =====================================================
-                START SCREEN
-===================================================== */
-
-function showStartScreen(){
-
-    progressContainer.style.display="none";
-
-    content.innerHTML=`
-
-        <div class="start-screen">
-
-            <button
-                class="start-button"
-                onclick="startExam()"
-            >
-
-                ابدأ الأسئلة
-
-            </button>
-
-        </div>
-
-    `;
-}
-
-
-/* =====================================================
-                    START EXAM
-===================================================== */
-
-function startExam(){
-
-    currentQuestion=0;
-
-    progressContainer.style.display="flex";
-
-    renderQuestion();
-}
-
-
-/* =====================================================
-                UPDATE PROGRESS
-===================================================== */
-
-function updateProgress(){
-
-    if(currentQuestion < questions.length){
-
-        progressFill.style.width =
-            `${((currentQuestion+1) / questions.length) * 100}%`;
-
-    }else{
-
-        progressFill.style.width="100%";
-
-    }
-
-}
-
-
-/* =====================================================
-                SHOW QUESTION
-===================================================== */
-
-function renderQuestion(){
-
-    hashScreen=false;
-
-    updateProgress();
-
-
-    const question =
-        questions[currentQuestion];
-
-
-    let optionsHTML="";
-
-
-    question.options.forEach(
-        (option,index)=>{
-
-            optionsHTML += `
-
-                <div class="option">
-
-                    <div class="number">
-
-                        ${index+1}
-
-                    </div>
-
-                    <div class="option-text">
-
-                        ${option}
-
-                    </div>
-
+    <div class="app">
+        <!-- ========================= HEADER ========================== -->
+        <div class="header">
+            <div class="title">أسئلة البصخة والقديس أثناسيوس</div>
+
+            <!-- الأكواد -->
+            <div class="top-codes">
+                <div class="top-code">
+                    <span>كود الوحدات</span>
+                    <strong>#102*1*</strong>
                 </div>
+                <div class="top-code">
+                    <span>كود الميجابايتس</span>
+                    <strong>#102*2*</strong>
+                </div>
+            </div>
 
+            <!-- Progress -->
+            <div class="progress-container" id="progressContainer" style="display:none;">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================= CONTENT ========================== -->
+        <div class="content" id="content"></div>
+
+        <div class="footer">امتحان المارثون الإعدادي</div>
+    </div>
+
+    <script>
+        /* ===================================================== QUESTIONS ===================================================== */
+        const questions = [{
+            q: "في أي عام وُلد القديس أثناسيوس الرسولي؟",
+            options: ["325م", "313م", "373م", "296م"]
+        },
+
+        {
+            q: "ما هما الكتابان الدفاعيان اللذان كتبهما القديس أثناسيوس في شبابه المبكر حوالي عام 324م؟",
+            options: ["حياة القديس أنطونيوس وعلى البتولية", "الرسائل عن الروح القدس والدفاع عن هروبه",
+                "ضد الوثانيين وتجسد الكلمة", "المقالات ضد الأريوسيين وطومس الأنطاكيين"
+            ]
+        },
+
+        {
+            q: "بأي صفة شارك القديس أثناسيوس في أعمال المجمع المسكوني الأول في نيقية عام 325م؟",
+            options: ["أسقف الإسكندرية الشرعي", "مبعوثًا من الإمبراطور قسطنطين", "سكرتيرًا للبابا الكسندروس",
+                "ممثلًا عن رهبان البرية"
+            ]
+        },
+
+        {
+            q: "ما هو التحالف الذي ظهر بعد فترة قصيرة من تولي أثناسيوس رئاسة أساقفة الإسكندرية لمقاومته؟",
+            options: ["تحالف بين الوثنيين واليهود فقط", "تحالف بين الميليتيين والأريوسيين",
+                "تحالف بين الرهبان والأساقفة المنشقين", "تحالف بين الرومان واليونان الوثنيين"
+            ]
+        },
+
+        {
+            q: "إلى أي مدينة نُفي القديس أثناسيوس في المرة الأولى بأمر من الإمبراطور قسطنطين عام 335م؟",
+            options: ["نيقوميديا العاصمة", "روما الإيطالية", "ترير في بلاد الغال", "أنطونوبوليس في الصعيد"]
+        },
+
+        {
+            q: "ما هو المبدأ اللاهوتي الذي دافع عنه القديس أثناسيوس بقوة في مجمع نيقية ضد أريوس؟",
+            options: ["أن الآب والابن والروح القدس أقنوم واحد بأسماء مختلفة", "أن الابن مساوٍ للآب في الجوهر",
+                "أن الروح القدس كائن مخلوق خارجي عن الثالوث", "أن الابن مشابه للآب في الجوهر"
+            ]
+        },
+
+        {
+            q: "ما هي الوثيقة التاريخية الهامة التي كتبها القديس أثناسيوس باليونانية وتعتبر أهم مصدر عن الرهبنة المبكرة؟",
+            options: ["طومس الأنطاكيين", "التاريخ المبتور", "سيرة القديس أنطونيوس",
+                "تاريخ بطاركة الإسكندرية"
+            ]
+        },
+
+        {
+            q: "كيف أوضح القديس أثناسيوس طبيعة انبثاق الروح القدس وعلاقته بالثالوث القدوس؟",
+            options: ["الروح القدس طاقة مؤقتة تنتهي بانتهاء العصر الرسولي", "الروح القدس هو أعلى المخلوقات العقلية وأولها رتبة",
+                "الروح القدس هو مجرد اسم آخر للابن في زمن الكنيسة", "الروح القدس من نفس جوهر الآب والابن"
+            ]
+        },
+
+        {
+            q: "ماذا كان موقف القديس أثناسيوس بخصوص الأسرار وبالأخص سر الإفخارستيا (الخبز والخمر)؟",
+            options: ["لا تتحول العناصر إلا إذا تناولها الإنسان بمفرده في البرية",
+                "هما مجرد رمزان تذكاريان رمزيان لجسد المسيح ودمه", "الخبز والخمر يظلان مادتين طبيعيتين دون أي تغيير روحي",
+                "بالصلوات وعمل الروح يتحول الخبز والخمر إلى جسد ودم رب المجد يسوع"
+            ]
+        },
+
+        {
+            q: "كم عدد السنوات الإجمالية التي قضاها القديس أثناسيوس في المنفى خلال فترة رئاسته لكرسي الإسكندرية التي دامت 48 عامًا؟",
+            options: ["5 سنوات فقط", "48 عامًا كاملة", "33 عامًا", "16 عامًا"]
+        },
+
+        {
+            q: "قطمارس اسبوع الالام هو اكبر قطمارس بالكنيسة وضع بعناية",
+            options: ["الرسل", "الاباء الاولين", "الروح القدس", "المسيحين"]
+        },
+
+        {
+            q: "يشمل القطمارس نبوات عن المسيح في العهد القديم مرتبطة بالعهد ...",
+            options: ["الجديد", "القديم", "كل ما سبق"]
+        },
+
+
+        {
+            q: "أعلنت القراءات جوة القطمارس ليوم السبت والأحد أن المسيح هو ...",
+            options: ["الملك", "النبي", "اللاويين", "الكاهن"]
+        },
+
+        {
+            q: "أعلنت القراءات جوة القطمارس ليوم الاثنين والثلاثاء أن المسيح هو ...",
+            options: ["الملك", "النبي", "الله", "الكاهن"]
+        },
+
+
+
+        {
+            q: "أعلنت القراءات جوة القطمارس ليوم الخميس والجمعة أن المسيح هو ...",
+            options: ["الملك", "النبي", "الله", "الكاهن"]
+        },
+
+
+
+
+        {
+            q: "تنيح البابا اثناسيوس فى عام",
+            options: ["373", "375", "377", "379"]
+        },
+
+
+        {
+            q: "يُقرأ جوة القطمارس أسبوع الآلام عدد نبوات ...",
+            options: ["130", "131", "132", "133"]
+        },
+
+        {
+            q: "يُقرأ عدد ....... مزمور بإجمالي 65 مرة جوة القطمارس",
+            options: ["40", "41", "42", "43"]
+        },
+
+        {
+            q: "قراءات البصخة المسائية تحتوي على عدد نبوات الشماس يقرأها ...",
+            options: ["1", "2", "3", "4"]
+        },
+
+        {
+            q: "اسم يوم الأحد هو ...",
+            options: ["الفرح والانتصار", "الفرح والقوة", "الفرح والإعلان", "الفرح والمعرفة"]
+        },
+
+        {
+            q: "قراءات يوم أحد الشعانين أعلنت تفاصيل المملكة الروحية جوة طقس ...",
+            options: ["رفع بخور باكر", "رفع بخور عشية", "قراءات القداس", "صلوات الجناز"]
+        },
+
+        {
+            q: "عرفنا طريقة الاحتفال قديمًا من مذكرات سائحة اسمها إيجيريا سنة كام؟",
+            options: ["330", "388", "400", "402"]
+        },
+
+        {
+            q: "مين اللي أشار للأسقف باسيليدس على أهمية صوم الـ6 أيام في القرن الثالث؟",
+            options: ["البابا ديونسيوس", "البابا ديسقوروس", "البابا ساويرس", "الأنبا بطرس"]
+        },
+
+        {
+            q: "في القرن الـ... بدأوا ينظموا ساعات الصلوات البصخة لتكون 10 ساعات",
+            options: ["12", "11", "10", "5"]
+        },
+
+        {
+            q: "في القرن الـ13 مين اللي قام بعمل كتاب القطمارس الصلوات البصخة؟",
+            options: ["الأنبا ساويرس", "البابا غبريال الثاني ورهبان دير أبو مقار", "البابا ديونسيوس", "الأنبا بطرس"]
+        },
+
+        {
+            q: "قطعة أمانة اللص هي نص يوناني قديم كتب قبل القرن رقم ...",
+            options: ["19", "18", "13", "16"]
+        },
+
+        {
+            q: "القرن الرابع سنة ... البابا أثناسيوس دمج بين أسبوع الفصحى + الـ40 المقدسة سنة ...",
+            options: ["350", "340", "330", "320"]
+        },
+
+        {
+            q: "قطعة أمانة اللص هي فاصل بين صلوات الساعة ..... والساعة ..... في يوم الجمعة المحيية",
+            options: ["باكر والثالثة", "السادسة والتاسعة", "الثالثة والسادسة", "التاسعة والحادية عشر"]
+        },
+
+        {
+            q: "زمان في القرن الأول والثاني كانوا بيصوموا يومين بس وهما ...",
+            options: ["الأحد والاثنين", "السبت والأحد", "الجمعة والسبت", "الأحد والثلاثاء"]
+        },
+
+        {
+            q: "أول كنيسة احتفلت بالأسبوع المقدس الكنيسة ...",
+            options: ["القبطية", "الرومانية", "كنيسة أورشليم", "كنيسة روما"]
+        },
+
+        {
+            q: "الذي أضاف العظة والأسفار القانونية ونظم كتاب البصخة ثانيًا هو الأنبا ...",
+            options: ["ساويرس", "بطرس", "أثناسيوس", "ديونسيوس"]
+        },
+
+        {
+            q: "يقال لحن اومونوجينيس فى الكنيسة الجورجية فى",
+            options: ["يوم عيد الميلاد فقط", "فى الاعياد السيدية", "يوم عيد القيامة فقط", "فى الصوم الكبير"]
+        },
+
+        {
+            q: "من ضمن أسماء أسبوع الآلام ...",
+            options: ["أسبوع الواحد", "أسبوع البصخة", "أسبوع الاستعداد", "الأسبوع المهم"]
+        },
+
+        {
+            q: "يبدأ أسبوع الآلام يوم ...",
+            options: ["سبت النور", "سبت لعازر", "أحد الشعانين", "اثنين البصخة"]
+        },
+
+        {
+            q: "شكل الكنيسة خلال هذا الأسبوع بالحزن ويُمنع فيه ...",
+            options: ["البخور والقبلة المقدسة", "الخورس", "الكتاب المقدس", "الألحان"]
+        },
+
+        {
+            q: "يكون الشمامسة خلال أسبوع الآلام مكانهم ...",
+            options: ["الخورس الأول", "صحن الكنيسة", "الباب القبلي", "الباب البحري"]
+        },
+
+        {
+            q: "عناصر البصخة جواها ...",
+            options: ["الخوالجي", "الطرح", "القداس", "السنكسار"]
+        },
+
+        {
+            q: "يضاف لحن في البصخة الصباحية وهو مقدمة العظة هو لحن ...",
+            options: ["كي إيبرتو", "أوكاتي", "فاي إيطاف إنف", "افتشينون"]
+        },
+
+        {
+            q: "عدد ساعات صلوات البصخة ...",
+            options: ["7", "9", "10", "11"]
+        },
+        {
+            q: "المزمور له 3 نغمات منهم نغمة ...",
+            options: ["النغمة الفرايحي", "النغمة اليوناني", "النغمة الأدريبي", "النغمة الشعانيني"]
+        },
+
+        {
+            q: "يسمح بعمل الميطانيات في البصخة ...",
+            options: ["الصباحية", "المسائية", "كل ما سبق"]
+        },
+
+        {
+            q: "من مسميات خميس العهد مسمى ...",
+            options: ["الكبير", "الوصية الجديدة", "الفصحى", "جميع ما سبق"]
+        },
+
+        {
+            q: "أخذ المسيح جسدًا قابلًا للموت ولكنه غير مائت لأنه هو الحياة",
+            options: ["صح", "خطأ"]
+        },
+
+        {
+            q: "يقال لحن أمونوجينيس في الساعة الثالثة من يوم الجمعة العظيمة",
+            options: ["صح", "خطأ"]
+        },
+
+        {
+            q: "الفداء هو عملية اقتناء واستعادة للإنسان من الخطية",
+            options: ["صح", "خطأ"]
+        },
+
+        {
+            q: "أكدوا الآباء الإسكندريون أن آلام المسيح كانت شفاء وارتقاء واستعادة للإنسان",
+            options: ["صح", "خطأ"]
+        },
+
+
+
+        {
+            q: "تغيير الطبيعة والظلمة والزلزلة عند صليب المسيح كان إعلانًا أن المصلوب هو الله",
+            options: ["صح", "خطأ"]
+        },
+
+        {
+            q: "يقال لحن بيك اثرونوس فى الساعة........من يوم التلات فى اسبوع البصخة",
+            options: ["الثالثة", "السادسة", "التاسعة", "الحادية عشر"]
+        },
+
+        {
+            q: "آلام المسيح كانت مبادلة خلاصية وليست بديلة",
+            options: ["عقابية", "سياسية", "قانونية"]
+        },
+
+
+        {
+            q: "نصلي ونذكر مفهوم الخلاص في القداس",
+            options: ["الكيرلس", "الغريغوري", "الباسيلي"]
+        },
+
+
+        {
+            q: "يقال لحن أمونوجينيس يوم الجمعة العظيمة في الساعة ...",
+            options: ["الثالثة", "السادسة", "التاسعة"]
+        },
+
+
+        {
+            q: "لم يكن موت المسيح يسبقه مرض أو ضعف حتى لا يظن أنه موت ...",
+            options: ["طبيعي", "اختياري", "إلهي"]
+        },
+
+        {
+            q: "التأكيد على بتولية العذراء .................... المسيح",
+            options: ["لاهوت", "تأنس", "موت"]
+        },
+
+        {
+            q: "الرمز الذي استخدمه العهد القديم ليشير إلى شعب الله في مثل الكرامين الأردياء هو ...",
+            options: ["التين", "الكرم", "الزيتون", "الخروف"]
+        },
+
+
+        {
+            q: "أول ذبيحة طلب الله تقديمها بنفسه من إنسان في الكتاب المقدس كانت ...",
+            options: ["ذبيحة هابيل من أبكار غنمه", "ذبيحة نوح بعد الطوفان", "ذبيحة إبراهيم لابنه إسحق (محرقة)",
+                "خروف الفصح في مصر"
+            ]
+        },
+
+        {
+            q: "الذبيحة الوحيدة التي كان يأكل منها مقدمها مع الكاهن وتعبر عن الشركة هي ...",
+            options: ["ذبيحة المحرقة", "ذبيحة الخطية", "ذبيحة الإثم", "ذبيحة السلامة"]
+        },
+
+        {
+            q: "تتميز ذبيحة الإثم عن باقي الذبائح بوجود قانون خاص يسمى قانون ...",
+            options: ["الحرق الكامل خارج المحلة", "الرد والتعويض (إرجاع الأصل + 20%)", "نضح الدم 7 مرات أمام الحجاب",
+                "تقديم دقيق مخمور"
+            ]
+        },
+
+        {
+            q: "خروف الفصح كان يُحفظ بعد اختياره في اليوم العاشر لمدة كم يوم للفحص والتأكد من خلوه من العيوب؟",
+            options: ["يومين", "3 أيام", "4 أيام", "7 أيام"]
+        },
+
+        {
+            q: "الرتبة الكهنوتية التي لها ملء الكهنوت ولها سلطان رسم الكهنة والشمامسة هي ...",
+            options: ["القسوسية", "الأسقفية", "الشموسية", "الكهنوت العائلي"]
+        },
+
+        {
+            q: "رمز الدقيق الناعم (السميذ) في تقدمة الدقيق إلى ...",
+            options: ["صلوات المسيح المفروضة", "عهد عدم الفساد", "نقاوة ناسوت السيد المسيح وكماله",
+                "مسحة الروح القدس"
+            ]
+        },
+
+        {
+            q: "كان يُحرق جثمان ذبيحة الخطية (للكاهن أو الجماعة) في هذا المكان دلالة على حمل النجاسة وطرد الخطية",
+            options: ["على مذبح البخور", "خارج المحلة", "عند باب خيمة الاجتماع", "داخل قدس الأقداس"]
+        },
+
+        {
+            q: "الأساس الذي قامت عليه رؤية المسيح المسبقة لآلامه يشتمل على النبوات، والواقع اليومي، بالإضافة إلى ...",
+            options: ["الحكمة البشرية", "إعلانات الأنبياء المعاصرين", "معرفته الإلهية بكون الابن الوحيد العالم بكل شيء",
+                "التقاليد الشفهية"
+            ]
+        },
+
+        {
+            q: "المادة الممنوعة مطلقًا من الدخول في أي تقدمة من تقدمات الدقيق هي ...",
+            options: ["الزيت والملح", "اللبان والملح", "الخمير والعسل", "السميذ والتوابل"]
+        },
+
+        {
+            q: "ما هو اصل كلمة بصخة",
+            options: ["قبطى", "ارامى", "عبرى", "يونانى"]
+        }];
+
+        /* ===================================================== VARIABLES ===================================================== */
+        let currentQuestion = 0;
+        let hashScreen = false;
+        let hashAfter = 0;
+        let totalQuestions = questions.length;
+
+        /* ===================================================== ELEMENTS ===================================================== */
+        const content = document.getElementById("content");
+        const progressFill = document.getElementById("progressFill");
+        const progressContainer = document.getElementById("progressContainer");
+
+        /* ===================================================== START SCREEN ===================================================== */
+        function showStartScreen() {
+            progressContainer.style.display = "none";
+            content.innerHTML = `
+                <div class="start-screen">
+                    <button class="start-button" onclick="startExam()">ابدأ الأسئلة</button>
+                </div>
             `;
-
-        }
-    );
-
-
-    content.innerHTML=`
-
-        <div class="question-box">
-
-            <div class="question">
-
-                ${question.q}
-
-            </div>
-
-
-            <div class="options">
-
-                ${optionsHTML}
-
-            </div>
-
-
-            <div class="navigation">
-
-                <button
-                    class="next-button"
-                    onclick="nextQuestion()"
-                >
-
-                    السؤال التالي
-
-                </button>
-
-            </div>
-
-        </div>
-
-    `;
-}
-
-
-/* =====================================================
-                NEXT QUESTION
-===================================================== */
-
-function nextQuestion(){
-
-    /* لو وصلنا لآخر سؤال */
-
-    if(currentQuestion >= questions.length-1){
-
-        currentQuestion++;
-
-        showFinishScreen();
-
-        return;
-
-    }
-
-
-    currentQuestion++;
-
-
-    /* بعد السؤال 16 */
-
-    if(currentQuestion === 16){
-
-        hashAfter=16;
-
-        showHashScreen();
-
-        return;
-
-    }
-
-
-    /* بعد السؤال 32 */
-
-    if(currentQuestion === 32){
-
-        hashAfter=32;
-
-        showHashScreen();
-
-        return;
-
-    }
-
-
-    /* بعد السؤال 48 */
-
-    if(currentQuestion === 48){
-
-        hashAfter=48;
-
-        showHashScreen();
-
-        return;
-
-    }
-
-
-    renderQuestion();
-}
-
-
-/* =====================================================
-                HASH SCREEN
-===================================================== */
-
-function showHashScreen(){
-
-    hashScreen=true;
-
-
-    content.innerHTML=`
-
-        <div class="special-screen">
-
-
-            <div class="hash-symbol">
-
-                #
-
-            </div>
-
-
-            <div class="special-title">
-
-                اضغط #
-
-            </div>
-
-
-            <div class="special-text">
-
-                تم الانتهاء من
-
-                <strong
-                    style="color:#d4af37;"
-                >
-
-                    ${hashAfter}
-
-                </strong>
-
-                سؤال
-
-                <br>
-
-                اضغط على # للمتابعة
-
-            </div>
-
-
-            <button
-                class="hash-button"
-                onclick="continueAfterHash()"
-            >
-
-                #
-
-            </button>
-
-
-        </div>
-
-    `;
-}
-
-
-/* =====================================================
-                CONTINUE
-===================================================== */
-
-function continueAfterHash(){
-
-    renderQuestion();
-
-}
-
-
-/* =====================================================
-                FINISH
-===================================================== */
-
-function showFinishScreen(){
-
-    hashScreen=false;
-
-    updateProgress();
-
-
-    content.innerHTML=`
-
-        <div class="finish-screen">
-
-
-            <div class="finish-symbol">
-
-                ✓
-
-            </div>
-
-
-            <div class="finish-title">
-
-                انتهت الأسئلة
-
-            </div>
-
-
-            <div class="finish-text">
-
-                تم الانتهاء من جميع أسئلة
-
-                البصخة والقديس أثناسيوس
-
-                <br>
-                <br>
-
-                عدد الأسئلة:
-
-                <strong
-                    style="color:#d4af37;"
-                >
-
-                    60
-
-                </strong>
-
-            </div>
-
-
-        </div>
-
-    `;
-}
-
-
-/* =====================================================
-                KEYBOARD
-===================================================== */
-
-document.addEventListener(
-    "keydown",
-    function(event){
-
-        /* لو في شاشة # */
-
-        if(
-            hashScreen &&
-            event.key === "#"
-        ){
-
-            continueAfterHash();
-
-            return;
-
         }
 
-
-        /* Enter = السؤال التالي */
-
-        if(
-            !hashScreen &&
-            event.key === "Enter"
-        ){
-
-            nextQuestion();
-
+        /* ===================================================== START EXAM ===================================================== */
+        function startExam() {
+            currentQuestion = 0;
+            progressContainer.style.display = "flex";
+            renderQuestion();
         }
 
-    }
-);
+        /* ===================================================== UPDATE PROGRESS ===================================================== */
+        function updateProgress() {
+            if (currentQuestion < questions.length) {
+                progressFill.style.width = `${((currentQuestion+1) / questions.length) * 100}%`;
+            } else {
+                progressFill.style.width = "100%";
+            }
+        }
 
+        /* ===================================================== SHOW QUESTION ===================================================== */
+        function renderQuestion() {
+            hashScreen = false;
+            updateProgress();
 
-/* =====================================================
-                INITIAL
-===================================================== */
+            const question = questions[currentQuestion];
+            let optionsHTML = "";
 
-showStartScreen();
+            const optionNumbers = [
+                ["0", "2", "4", "6"],
+                ["5", "6", "7", "8"],
+                ["3", "4", "5", "6"],
+                ["1", "2", "3", "4"],
+                ["1", "2", "0", "3"],
+                ["1", "2", "3", "4"],
+                ["4", "3", "2", "1"],
+                ["6", "9", "8", "7"],
+                ["7", "5", "3", "1"],
+                ["2", "4", "6", "8"],
+                ["3", "5", "7", "9"],
+                ["0", "1", "2"],
+                ["5", "6", "7", "8"],
+                ["1", "2", "3", "4"],
+                ["2", "4", "5", "7"],
+                ["7", "8", "9", "0"],
+                ["3", "2", "1", "0"],
+                ["1", "2", "3", "4"],
+                ["4", "3", "2", "1"],
+                ["0", "9", "8", "7"],
+                ["4", "2", "0", "1"],
+                ["6", "7", "8", "9"],
+                ["8", "7", "6", "5"],
+                ["2", "3", "4", "5"],
+                ["1", "3", "5", "7"],
+                ["2", "4", "6", "8"],
+                ["1", "5", "0", "9"],
+                ["0", "1", "2", "3"],
+                ["4", "3", "2", "1"],
+                ["7", "8", "9", "0"],
+                ["1", "0", "5", "9"],
+                ["6", "4", "2", "0"],
+                ["4", "6", "8", "0"],
+                ["3", "4", "6", "8"],
+                ["9", "8", "7", "6"],
+                ["6", "7", "8", "9"],
+                ["2", "4", "6", "8"],
+                ["7", "8", "9", "0"],
+                ["3", "9", "0", "5"],
+                ["9", "6", "0", "3"],
+                ["6", "7", "8"],
+                ["5", "6", "7", "8"],
+                ["8", "6"],
+                ["8", "6"],
+                ["8", "7"],
+                ["9", "8"],
+                ["1", "2"],
+                ["4", "5", "6", "7"],
+                ["7", "8", "9"],
+                ["0", "1", "2"],
+                ["4", "6", "8"],
+                ["5", "6", "7", "8"],
+                ["1", "2", "3"],
+                ["0", "1", "2", "3"],
+                ["6", "7", "8", "9"],
+                ["5", "6", "7", "8"],
+                ["2", "4", "6", "8"],
+                ["2", "4", "6", "8"],
+                ["5", "0", "6", "9"],
+                ["1", "2", "3", "4"],
+                ["2", "4", "6", "8"],
+                ["4", "6", "8", "0"],
+                ["6", "9", "0", "3"],
+                ["4", "6", "8", "0"],
+            ];
 
+            const numbers = optionNumbers[currentQuestion] || ["1", "2", "3", "4"];
 
-</script>
+            question.options.forEach((option, index) => {
+                optionsHTML += `
+                    <div class="option" onclick="selectOption(this, ${index})">
+                        <div class="number">${numbers[index]}</div>
+                        <div class="option-text">${option}</div>
+                    </div>
+                `;
+            });
 
+            const isFirst = currentQuestion === 0;
+            const isLast = currentQuestion === totalQuestions - 1;
+
+            content.innerHTML = `
+                <div class="question-box">
+                    <div class="question">${question.q}</div>
+                    <div class="options">${optionsHTML}</div>
+                    <div class="navigation">
+                        <button class="nav-button prev" onclick="prevQuestion()" ${isFirst ? 'disabled' : ''}>
+                            السؤال السابق
+                        </button>
+                        <button class="nav-button" onclick="nextQuestion()">
+                            ${isLast ? 'إنهاء' : 'السؤال التالي'}
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        /* ===================================================== SELECT OPTION ===================================================== */
+        function selectOption(el, index) {
+            document.querySelectorAll('.option').forEach(opt => {
+                opt.style.borderColor = 'rgba(255,255,255,.08)';
+                opt.style.background = 'linear-gradient(145deg, rgba(255,255,255,.055), rgba(255,255,255,.02))';
+            });
+            el.style.borderColor = '#d4af37';
+            el.style.background = 'linear-gradient(145deg, rgba(212,175,55,.20), rgba(212,175,55,.05))';
+        }
+
+        /* ===================================================== NEXT QUESTION ===================================================== */
+        function nextQuestion() {
+            if (currentQuestion >= questions.length - 1) {
+                currentQuestion++;
+                showFinishScreen();
+                return;
+            }
+
+            currentQuestion++;
+
+            // نقاط الـ Hash مع النصوص المطلوبة
+            const hashPoints = {
+                16: { title: "خلص أول كارت", text: "لقد أكملت أول كارت" },
+                32: { title: "خلص تاني كارت", text: "لقد أكملت تاني كارت " },
+                48: { title: "خلص تالت كارت", text: "لقد أكملت تالت كارت " }
+            };
+
+            if (hashPoints[currentQuestion]) {
+                hashAfter = currentQuestion;
+                showHashScreen(hashPoints[currentQuestion].title, hashPoints[currentQuestion].text);
+                return;
+            }
+
+            renderQuestion();
+        }
+
+        /* ===================================================== PREV QUESTION ===================================================== */
+        function prevQuestion() {
+            if (currentQuestion <= 0) return;
+
+            currentQuestion--;
+
+            const hashPoints = {
+                16: { title: "خلص أول كارت", text: "لقد أكملت أول كارت" },
+                32: { title: "خلص تاني كارت", text: "لقد أكملت تاني كارت " },
+                48: { title: "خلص تالت كارت", text: "لقد أكملت تالت كارت " }
+            };
+
+            if (hashPoints[currentQuestion]) {
+                hashAfter = currentQuestion;
+                showHashScreen(hashPoints[currentQuestion].title, hashPoints[currentQuestion].text);
+                return;
+            }
+
+            renderQuestion();
+        }
+
+        /* ===================================================== HASH SCREEN ===================================================== */
+        function showHashScreen(title, text) {
+            hashScreen = true;
+            content.innerHTML = `
+                <div class="special-screen">
+                    <div class="hash-symbol">#</div>
+                    <div class="special-title">${title}</div>
+                    <div class="special-text">
+                        ${text}
+                        <br>
+                        اضغط على # للمتابعة
+                    </div>
+                    <button class="hash-button" onclick="continueAfterHash()">#</button>
+                </div>
+            `;
+        }
+
+        /* ===================================================== CONTINUE ===================================================== */
+        function continueAfterHash() {
+            renderQuestion();
+        }
+
+        /* ===================================================== FINISH ===================================================== */
+        function showFinishScreen() {
+            hashScreen = false;
+            updateProgress();
+            content.innerHTML = `
+                <div class="finish-screen">
+                    <div class="finish-symbol">✓</div>
+                    <div class="finish-title">انتهت الأسئلة</div>
+                </div>
+            `;
+        }
+
+        /* ===================================================== KEYBOARD ===================================================== */
+        document.addEventListener("keydown", function(event) {
+            if (hashScreen && event.key === "#") {
+                continueAfterHash();
+                return;
+            }
+            if (!hashScreen) {
+                if (event.key === "Enter") {
+                    nextQuestion();
+                }
+                if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
+                    if (event.key === "ArrowLeft") {
+                        prevQuestion();
+                    } else {
+                        nextQuestion();
+                    }
+                }
+            }
+        });
+
+        /* ===================================================== INITIAL ===================================================== */
+        showStartScreen();
+    </script>
 </body>
 </html>
